@@ -86,7 +86,7 @@ func (a *Ardor) transferAsset(network string, recipient string, senderPublicKey 
 	// data.Set("messageToEncrypt", encryptedMessage)
 	// data.Set("messageToEncryptIsText", "true")
 
-	res, err = postUrlencodedRequest(_url, data, 5)
+	res, err = a.PostUrlencodedRequest(_url, data, 5)
 	if err != nil {
 		return
 	}

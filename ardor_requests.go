@@ -215,14 +215,14 @@ func (a *Ardor) GetRawRequest(path string, timeout int, sigbroToken string) ([]b
 	return response, nil
 }
 
-func PostRequest(url string, data ArdorRequest) (ArdorResponse, error) {
+func (a *Ardor) PostRequest(path string, data ArdorRequest) (ArdorResponse, error) {
 	var ardorResp ArdorResponse
 
 	timeout, _ := strconv.Atoi(httpTimeout)
 	httpClient := http.Client{Timeout: time.Second * time.Duration(timeout)}
 
 	dd := encodedStruct(data)
-	req, err := http.NewRequest(http.MethodPost, url, strings.NewReader(dd))
+	req, err := http.NewRequest(http.MethodPost, a.buildURL(path), strings.NewReader(dd))
 	if err != nil {
 		return ardorResp, err
 	}
@@ -252,13 +252,13 @@ func PostRequest(url string, data ArdorRequest) (ArdorResponse, error) {
 	return ardorResp, nil
 }
 
-func postUrlencodedRequest(url string, data url.Values, timeout int) (ArdorJsonResponse, error) {
+func (a *Ardor) PostUrlencodedRequest(path string, data url.Values, timeout int) (ArdorJsonResponse, error) {
 	var response ArdorJsonResponse
 	client := http.Client{
 		Timeout: time.Duration(timeout) * time.Second,
 	}
 
-	res, err := client.Post(url, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+	res, err := client.Post(a.buildURL(path), "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

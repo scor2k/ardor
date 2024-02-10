@@ -20,6 +20,22 @@ type ArdorResponse struct {
 	Properties               []ArdorAssetProperty   `json:"properties"`
 	SetterRS                 string                 `json:"setterRS"` // getAccountProperties
 	Transaction              string                 `json:"transaction"`
+	Trades                   []ArdorTrades          `json:"trades"`
+}
+
+type ArdorTrades struct {
+	QuantityQNT     string `json:"quantityQNT"`
+	Chain           int    `json:"chain"`
+	OrderFullHash   string `json:"orderFullHash"`
+	ExcangeRate     string `json:"exchangeRate"`
+	AccountRS       string `json:"accountRS"`
+	Excange         int    `json:"exchange"`
+	Block           string `json:"block"`
+	MatchFullHash   string `json:"matchFullHash"`
+	PriceNQTPerCoin string `json:"priceNQTPerCoin"`
+	Account         string `json:"account"`
+	Height          int    `json:"height"`
+	Timestamp       int    `json:"timestamp"`
 }
 
 type ArdorAsset struct {
