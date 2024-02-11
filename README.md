@@ -5,15 +5,14 @@ Pre alpha version. Not ready at all =)
 ### How to use
 
 ```
-go get "github.com/scor2k/ardor"
+go get -u "github.com/scor2k/ardor"
 ```
 
 ```go
-import "github.com/scor2k/ardor"
-
-func main() {
-    ardor := ardor.Ardor{}
-    ardor.Init("http://localhost:26876/nxt")
+ardor := Ardor{Endpoint: "https://random.api.nxter.org/ardor"}
+params := map[string]interface{}{
+    "requestType": "getTime",
 }
+data, err := ardor.PostRequest(params)
 ```
 

@@ -6,7 +6,7 @@ import (
 
 var (
 	appName     = "ardor-pkg"
-	appVersion  = "0.0.3"
+	appVersion  = "0.0.4"
 	httpTimeout = "5"
 )
 
