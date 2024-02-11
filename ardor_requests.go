@@ -56,7 +56,7 @@ func encodedStruct(data interface{}) string {
 		case reflect.Int:
 			encodedValue = fmt.Sprintf("%d", field.Int())
 		case reflect.Uint64:
-			encodedValue = fmt.Sprintf("%d", field.Int())
+			encodedValue = fmt.Sprintf("%d", field.Uint())
 		case reflect.Int64:
 			encodedValue = fmt.Sprintf("%d", field.Int())
 		case reflect.String:
@@ -215,14 +215,14 @@ func (a *Ardor) GetRawRequest(path string, timeout int, sigbroToken string) ([]b
 	return response, nil
 }
 
-func (a *Ardor) PostRequest(path string, data ArdorRequest) (ArdorResponse, error) {
+func (a *Ardor) PostRequest(data map[string]interface{}) (ArdorResponse, error) {
 	var ardorResp ArdorResponse
 
 	timeout, _ := strconv.Atoi(httpTimeout)
 	httpClient := http.Client{Timeout: time.Second * time.Duration(timeout)}
 
-	dd := encodedStruct(data)
-	req, err := http.NewRequest(http.MethodPost, a.buildURL(path), strings.NewReader(dd))
+	dd := encodeParams(data)
+	req, err := http.NewRequest(http.MethodPost, a.Endpoint, strings.NewReader(dd))
 	if err != nil {
 		return ardorResp, err
 	}

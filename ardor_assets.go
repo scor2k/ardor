@@ -8,24 +8,7 @@ import (
 	"strconv"
 )
 
-func (a *Ardor) ardorIssueAsset(data ArdorRequest, network string) (response ArdorResponse, err error) {
-	url := a.buildURL("?requestType=issueAsset")
-
-	res, err := PostRequest(url, data)
-	if err != nil {
-		empty := ArdorResponse{}
-		return empty, err
-	}
-
-	if res.ErrorCode != 0 {
-		empty := ArdorResponse{}
-		return empty, fmt.Errorf("%s", res.ErrorDescription)
-	}
-
-	return res, nil
-}
-
-func (a *Ardor) ardorGetAssetsByIssuerAccount(accountRS string, network string, start int, end int) (response ArdorResponse, err error) {
+func (a *Ardor) ArdorGetAssetsByIssuerAccount(accountRS string, network string, start int, end int) (response ArdorResponse, err error) {
 	url := fmt.Sprintf("%s?requestType=getAssetsByIssuer&account=%s&firstIndex=%d&lastIndex=%d", a.Endpoint, accountRS, start, end)
 
 	res, err := a.GetRequest(url)
@@ -40,7 +23,7 @@ func (a *Ardor) ardorGetAssetsByIssuerAccount(accountRS string, network string, 
 	return res, nil
 }
 
-func (a *Ardor) ardorGetAccountAssets(accountRS string, network string) (response ArdorResponse, err error) {
+func (a *Ardor) ArdorGetAccountAssets(accountRS string, network string) (response ArdorResponse, err error) {
 	url := fmt.Sprintf("%s?requestType=getAccountAssets&account=%s&includeAssetInfo=true", a.Endpoint, accountRS)
 	resArdor, errArdor := a.GetRequest(url)
 	if errArdor != nil {
@@ -55,7 +38,7 @@ func (a *Ardor) ardorGetAccountAssets(accountRS string, network string) (respons
 }
 
 // ardorGetAccountAssets - get the list of user's assets
-func (a *Ardor) ardorGetAccountOneAsset(accountRS string, network string, asset string) (response ArdorResponse, err error) {
+func (a *Ardor) ArdorGetAccountOneAsset(accountRS string, network string, asset string) (response ArdorResponse, err error) {
 	url := fmt.Sprintf("%s?requestType=getAccountAssets&account=%s&includeAssetInfo=true&asset=%s", a.Endpoint, accountRS, asset)
 	resArdor, errArdor := a.GetRequest(url)
 	if errArdor != nil {
@@ -70,7 +53,7 @@ func (a *Ardor) ardorGetAccountOneAsset(accountRS string, network string, asset 
 }
 
 // transferAsset - transfer asset to another account
-func (a *Ardor) transferAsset(network string, recipient string, senderPublicKey string, asset string, encryptedMessage string, quantityQNT int) (res ArdorJsonResponse, err error) {
+func (a *Ardor) TransferAsset(network string, recipient string, senderPublicKey string, asset string, encryptedMessage string, quantityQNT int) (res ArdorJsonResponse, err error) {
 	_url := a.buildURL("?requestType=transferAsset")
 
 	data := url.Values{}
@@ -172,7 +155,7 @@ func (a *Ardor) getAllAssetsByIssuer(account string, network string) (items []Ar
 	end := 100
 
 	for {
-		assets, assertsErr := a.ardorGetAssetsByIssuerAccount(account, network, start, end)
+		assets, assertsErr := a.ArdorGetAssetsByIssuerAccount(account, network, start, end)
 		if assertsErr != nil {
 			return
 		}

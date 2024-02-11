@@ -21,6 +21,8 @@ type ArdorResponse struct {
 	SetterRS                 string                 `json:"setterRS"` // getAccountProperties
 	Transaction              string                 `json:"transaction"`
 	Trades                   []ArdorTrades          `json:"trades"`
+	UnixTime                 int64                  `json:"unixtime"`
+	Time                     int64                  `json:"time"`
 }
 
 type ArdorTrades struct {
@@ -54,35 +56,6 @@ type ArdorAsset struct {
 type ArdorAssetProperty struct {
 	Property string `json:"property"`
 	Value    string `json:"value"`
-}
-
-// prepare unsigned Tx
-type ArdorRequest struct {
-	Description       string `json:"description"`
-	Tags              string `json:"tags"`
-	TypeName          string `json:"typeName"`
-	Channel           string `json:"channel"`
-	Data              string `json:"data"`
-	PublicKey         string `json:"publicKey"`
-	Deadline          int    `json:"deadline"`
-	Broadcast         bool   `json:"broadcast"`
-	MessageIsPrunable bool   `json:"messageIsPrunable"`
-	QuantityQNT       int    `json:"quantityQNT"`
-	Decimals          int    `json:"decimals"`
-	Name              string `json:"name"`
-	Chain             int    `json:"chain"`
-	FeeNQT            string `json:"feeNQT"`
-	AmountNQT         string `json:"amountNQT"`
-	Type              int    `json:"type"`
-	SubType           int    `json:"subtype"`
-	SenderRS          string `json:"senderRS"`
-	RecipientRS       string `json:"recipientRS"`
-	FullHash          string `json:"fullHash"`
-	Block             string `json:"block"`
-	BlockHeight       uint64 `json:"height"`
-	BlockTimestamp    uint64 `json:"blockTimestamp"`
-	Timestamp         uint64 `json:"timestamp"`
-	Transaction       string `json:"transaction"`
 }
 
 type ArdorBlockchainStatusResponse struct {

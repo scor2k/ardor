@@ -12,7 +12,8 @@ go get "github.com/scor2k/ardor"
 import "github.com/scor2k/ardor"
 
 func main() {
-    ardor := ardor.New("http://localhost:26876/nxt")
+    ardor := ardor.Ardor{}
+    ardor.Init("http://localhost:26876/nxt")
 }
 ```
 
