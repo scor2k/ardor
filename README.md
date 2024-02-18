@@ -14,5 +14,9 @@ params := map[string]interface{}{
     "requestType": "getTime",
 }
 data, err := ardor.PostRequest(params)
+if err != nil {
+    log.Fatal(err)
+}
+fmt.Prinftf("Time: %+v", date)
 ```
 
