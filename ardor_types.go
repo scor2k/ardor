@@ -25,6 +25,7 @@ type ArdorResponse struct {
 	UnixTime                 int64                  `json:"unixtime"`
 	Time                     int64                  `json:"time"`
 	RequestProcessingTime    int64                  `json:"requestProcessingTime"`
+	Confirmations            int64                  `json:"confirmations"`
 }
 
 type ArdorOrders struct {
