@@ -118,3 +118,61 @@ func (a *Ardor) PostRequest(data map[string]interface{}) (ArdorResponse, error) 
 
 	return ardorResp, nil
 }
+
+func (a *Ardor) GetRequestRaw(path string) ([]byte, error) {
+	timeout, _ := strconv.Atoi(httpTimeout)
+	httpClient := http.Client{Timeout: time.Second * time.Duration(timeout)}
+
+	req, err := http.NewRequest(http.MethodGet, a.buildURL(path), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("User-Agent", fmt.Sprintf("%s/%s", appName, appVersion))
+
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		return nil, getErr
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	body, readErr := io.ReadAll(io.Reader(res.Body))
+	if readErr != nil {
+		return nil, readErr
+	}
+
+	return body, nil
+}
+
+func (a *Ardor) PostRequestRaw(data map[string]interface{}) ([]byte, error) {
+	timeout, _ := strconv.Atoi(httpTimeout)
+	httpClient := http.Client{Timeout: time.Second * time.Duration(timeout)}
+
+	dd := encodeParams(data)
+	req, err := http.NewRequest(http.MethodPost, a.Endpoint, strings.NewReader(dd))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value")
+	req.Header.Set("User-Agent", fmt.Sprintf("%s/%s", appName, appVersion))
+
+	res, getErr := httpClient.Do(req)
+	if getErr != nil {
+		return nil, getErr
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	body, readErr := io.ReadAll(io.Reader(res.Body))
+	if readErr != nil {
+		return nil, readErr
+	}
+
+	return body, nil
+}
